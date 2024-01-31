@@ -1,19 +1,27 @@
-import React, { ReactNode } from 'react'
-import { NavBar } from './_components/navbar'
-import { Sidebar } from './_components/sidebar'
-import { Container } from './_components/container'
+import { Suspense } from "react";
 
+import { Navbar } from "./_components/navbar";
+import { Container } from "./_components/container";
+import { Sidebar, SidebarSkeleton } from "./_components/sidebar";
 
-export default function BrosweLayout({children}: {children: React.ReactNode}) {
-  return (
+const BrowseLayout = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  return ( 
     <>
-        <NavBar />
-        <div className='flex h-full pt-20'>
-            <Sidebar />
-            <Container>
-            {children}
-            </Container>
-        </div>
+      <Navbar />
+      <div className="flex h-full pt-20">
+        <Suspense fallback={<SidebarSkeleton />}>
+          <Sidebar />
+        </Suspense>
+        <Container>
+          {children}
+        </Container>
+      </div>
     </>
-  )
-}
+  );
+};
+ 
+export default BrowseLayout;
